@@ -1,0 +1,22 @@
+﻿<Properties StartupConfiguration="{2CB20A04-A462-778E-64B9-7B3F15600FA0}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/LandManage.cs">
+    <Files>
+      <File FileName="Assets/Script/LandManage.cs" Line="27" Column="14" />
+      <File FileName="Assets/Script/cubeLand.cs" Line="5" Column="38" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="meng_huan" expanded="True" selected="True" />
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="0e620763-eca3-45dd-a6c2-f6d759c21fe6" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
