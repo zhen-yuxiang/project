@@ -16,12 +16,34 @@ public class LandManage : MonoBehaviour
     //主角当前位置
     private int m_nowLandX = 0;
     private int m_nowLandY = 0;
+    private ObjectPool poolManage = null;
+
+    void Awake()
+    {
+        poolManage = ObjectPool.Instance;
+        poolManage.createOneTypePool("floorCude", "prefab/Cube", 50);
+    }
 
     void Start()
     {
+
         m_oldLandX = (int)Player.transform.position.x;
         m_oldLandY = (int)Player.transform.position.z;
         InitLand();
+    }
+
+    private void InitLand()
+    {
+        for (int i = 0 - m_labdX; i <= m_labdX; ++i)
+        {
+            for (int j = 0 - m_labdY; j <= m_labdY; ++j)
+            {
+                Transform _cude = CreateCude(i, -2, j);
+                cubeLand _cubeLand = _cude.gameObject.AddComponent<cubeLand>();
+                _cubeLand.SetSubeLandInfo(i, j);
+                m_landList.Add(_cubeLand);
+            }
+        }
     }
 
 
@@ -66,7 +88,7 @@ public class LandManage : MonoBehaviour
         {
             if (m_landList[i].CubeY == _deleteY)
             {
-                Destroy(m_landList[i].gameObject);
+                poolManage.recycleObject(m_landList[i].gameObject);
                 m_landList.Remove(m_landList[i]);
 
             }
@@ -80,7 +102,6 @@ public class LandManage : MonoBehaviour
         {
             Transform _cude = CreateCude(j, -2, _createY);
             cubeLand _cubeLand = _cude.gameObject.AddComponent<cubeLand>();
-            _cude.name = j + "_" + _createY.ToString();
             _cubeLand.SetSubeLandInfo(j, _createY);
             m_landList.Add(_cubeLand);
         }
@@ -93,7 +114,7 @@ public class LandManage : MonoBehaviour
         {
             if (m_landList[i].CubeY == _deleteY)
             {
-                Destroy(m_landList[i].gameObject);
+                poolManage.recycleObject(m_landList[i].gameObject);
                 m_landList.Remove(m_landList[i]);
 
             }
@@ -107,7 +128,6 @@ public class LandManage : MonoBehaviour
         {
             Transform _cude = CreateCude(j, -2, _createY);
             cubeLand _cubeLand = _cude.gameObject.AddComponent<cubeLand>();
-            _cude.name = j.ToString() + "_" + _createY;
             _cubeLand.SetSubeLandInfo(j, _createY);
             m_landList.Add(_cubeLand);
         }
@@ -121,7 +141,7 @@ public class LandManage : MonoBehaviour
         {
             if (m_landList[i].CubeX == _deleteX)
             {
-                Destroy(m_landList[i].gameObject);
+                poolManage.recycleObject(m_landList[i].gameObject);
                 m_landList.Remove(m_landList[i]);
 
             }
@@ -135,7 +155,6 @@ public class LandManage : MonoBehaviour
         {
             Transform _cude = CreateCude(_createX, -2, j);
             cubeLand _cubeLand = _cude.gameObject.AddComponent<cubeLand>();
-            _cude.name = _createX.ToString() + "_" + j;
             _cubeLand.SetSubeLandInfo(_createX, j);
             m_landList.Add(_cubeLand);
         }
@@ -148,9 +167,8 @@ public class LandManage : MonoBehaviour
         {
             if (m_landList[i].CubeX == _deleteX)
             {
-                Destroy(m_landList[i].gameObject);
+                poolManage.recycleObject(m_landList[i].gameObject);
                 m_landList.Remove(m_landList[i]);
-
             }
         }
     }
@@ -162,38 +180,14 @@ public class LandManage : MonoBehaviour
         {
             Transform _cude = CreateCude(_createX, -2, j);
             cubeLand _cubeLand = _cude.gameObject.AddComponent<cubeLand>();
-            _cude.name = _createX.ToString() + "_" + j;
             _cubeLand.SetSubeLandInfo(_createX, j);
             m_landList.Add(_cubeLand);
         }
     }
 
-    private void InitLand()
+    private Transform CreateCude(int _x, int _y, int _z)
     {
-        for (int i = 0 - m_labdX; i <= m_labdX; ++i)
-        {
-            for (int j = 0 - m_labdY; j <= m_labdY; ++j)
-            {
-                Transform _cude = CreateCude(i, -2, j);
-                cubeLand _cubeLand = _cude.gameObject.AddComponent<cubeLand>();
-                _cude.name = i.ToString() + "_" + j;
-                _cubeLand.SetSubeLandInfo(i, j);
-                m_landList.Add(_cubeLand);
-            }
-        }
-    }
-
-    private Transform CreateCude (int _x, int _y,int _z)
-    {
-        GameObject _gObject = null;
-        //if (_assetPath != null)
-        //{
-        //    _gObject = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(_assetPath + ".prefab");
-        //} else
-        //{
-        //    _gObject = GameObject.Instantiate(Resources.Load<GameObject>(_objectName));
-        //}
-        _gObject = Instantiate(Resources.Load<GameObject>("prefab/Cube"));
+        GameObject _gObject = poolManage.spawnObject("floorCude");
         _gObject.transform.localPosition = new Vector3(_x, _y, _z);
         return _gObject.transform;
     }
